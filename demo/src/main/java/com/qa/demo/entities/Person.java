@@ -9,13 +9,16 @@ import jakarta.persistence.Id;
 @Entity
 public class Person {
 
-    @Column(name = "full_name", nullable = false, unique = true)
+    @Id
+    @GeneratedValue
+    private Integer id;
+
+    @Column(name = "full_name", nullable = false) /*unique = true)*/
     private String name;
     private int age;
     private String job;
 
 
-    private Integer id;
 
     public Person(String name, int age, String job) {
         this.name = name;
@@ -37,8 +40,7 @@ public class Person {
         return job;
     }
 
-    @Id
-    @GeneratedValue
+
     public Integer getId() { return id;}
 
 

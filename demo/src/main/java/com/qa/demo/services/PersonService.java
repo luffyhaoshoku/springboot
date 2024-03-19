@@ -2,6 +2,7 @@ package com.qa.demo.services;
 
 
 import com.qa.demo.entities.Person;
+import com.qa.demo.repos.PersonRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,23 +12,28 @@ import java.util.List;
 @Service
 public class PersonService {
 
-    private List<Person> people = new ArrayList<>();
+    private PersonRepo repo;
+
+    public PersonService(PersonRepo repo){
+        this.repo = repo;
+    }
 
 
     public List<Person> getAll() {
-        return this.people;
+        return this.repo.findAll();
     }
 
 
 
     public Person createPerson(Person person) {
-        this.people.add(person);
-        return this.people.get(this.people.size() - 1);
+        return this.repo.save(person);
     }
 
 
     public Person removePerson(int id) {
-        return this.people.remove(id);
+        Person removed = this.getById(id);
+        this.repo.deleteById(id);
+        return removed;
     }
 
 
@@ -35,17 +41,17 @@ public class PersonService {
                                String name,
                                Integer age,
                                String job) {
-        Person toUpdate = this.people.get(id);
+        Person toUpdate = this.getById(id);
 
         if (name != null) toUpdate.setName(name);
         if (age != null) toUpdate.setAge(age);
         if (job != null) toUpdate.setJob(job);
 
-        return toUpdate;
+        return this.repo.save(toUpdate);
     }
 
 
     public Person getById(int id){
-        return this.people.get(id);
+        return this.repo.findById(id).get();
     }
 }
