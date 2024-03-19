@@ -1,14 +1,21 @@
 package com.qa.demo.entities;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 @Entity
 public class Person {
 
+    @Column(name = "full_name", nullable = false, unique = true)
     private String name;
     private int age;
     private String job;
+
+
+    private Integer id;
 
     public Person(String name, int age, String job) {
         this.name = name;
@@ -17,6 +24,7 @@ public class Person {
     }
 
     //Getters
+
     public String getName() {
         return name;
     }
@@ -29,6 +37,9 @@ public class Person {
         return job;
     }
 
+    @Id
+    @GeneratedValue
+    public Integer getId() { return id;}
 
 
     //Setters
@@ -44,7 +55,7 @@ public class Person {
         this.job = job;
     }
 
-
+    public void setId(Integer id) { this.id = id;}
 
 
 
