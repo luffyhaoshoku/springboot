@@ -1,5 +1,9 @@
 package com.qa.demo.entities;
 
+
+import jakarta.persistence.Entity;
+
+@Entity
 public class Person {
 
     private String name;
